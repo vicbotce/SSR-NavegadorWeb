@@ -5,11 +5,12 @@
  */
 package navssr;
 
+
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ResourceBundle;
@@ -22,13 +23,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javax.net.ssl.HttpsURLConnection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  *
  * @author sirkora
  */
 public class FXMLDocument_MainController implements Initializable {
-
+    String paginaActual;
+    String paginaAnterior;
+    String paginaSiguiente;
+    
     @FXML
     private Label label;
     @FXML
@@ -37,40 +45,77 @@ public class FXMLDocument_MainController implements Initializable {
     private WebView panelWEB;
     @FXML
     private TextField paginaURL;
-
+    @FXML
+    private Button botonAtras;
+    @FXML
+    private Button botonAlante;
+    
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        label.setText("Le has dado a buscar");
-        String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-        String url = "https://" + paginaURL.getText();
+        String pagina = "";
+        String paginaURLString = paginaURL.getText();
+        String userAgent="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
+   
+        label.setText("Hello World!");
+        URL url;
         try {
-            URL obj = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+            final WebEngine webEngine = panelWEB.getEngine();
+            //webEngine.load("http://www.pccomponentes.es");
+            // Creando un objeto URL
+            String link = "https://" + paginaURLString;
+            url = new URL(link);
+
+            // Realizando la petición GET
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("user-agent", userAgent);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            String response = new String();
-            while ((inputLine = in.readLine()) != null) {
-                response += inputLine;
+            // Leyendo el resultado
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+ 
+            String linea;
+            while ((linea = in.readLine()) != null) {
+                pagina += linea;
             }
-            in.close();
-            System.out.print(response);
-            WebEngine webEngine = panelWEB.getEngine();
             
-            webEngine.loadContent( response, "text/html");
-              
-
-        } catch (Exception e) {
-            System.out.println(e);
+            Document doc = Jsoup.parse(pagina);
+            Elements links = doc.select("img");
+            for(Element lin : links){
+                String href = lin.attr("src");
+                
+                System.out.println(href);
+                //webEngine.setUserStyleSheetLocation(getClass().getResource(href).toString());
+            }
+            paginaAnterior = paginaActual;
+            paginaActual = pagina;
+            webEngine.loadContent(pagina);
+   
+            
+            
+            
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
+ 
+    
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }    
+
+    @FXML
+    private void volverAtras(ActionEvent event) {
+        paginaSiguiente = paginaActual;
+        paginaActual = paginaAnterior;
+        
     }
 
+    @FXML
+    private void volerAlante(ActionEvent event) {
+        paginaActual = paginaSiguiente;
+        paginaSiguiente = "";
+    }
+    
 }
