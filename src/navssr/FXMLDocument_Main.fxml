@@ -8,11 +8,11 @@
 
 <AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="navssr.FXMLDocument_MainController">
     <children>
-        <Button fx:id="button" layoutX="738.0" layoutY="28.0" onAction="#handleButtonAction" text="Click Me!" />
+        <Button fx:id="button" layoutX="738.0" layoutY="28.0" onAction="#handleButtonAction" text="Buscar" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <WebView id="panelWEB" fx:id="panelWEB" layoutX="6.0" layoutY="69.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1500.0" />
       <TextField fx:id="paginaURL" layoutX="161.0" layoutY="28.0" prefHeight="27.0" prefWidth="561.0" />
-      <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" text="&lt;---" />
-      <Button layoutX="72.0" layoutY="28.0" mnemonicParsing="false" text="---&gt;" />
+      <Button fx:id="botonAtras" layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#volverAtras" text="&lt;---" />
+      <Button fx:id="botonAlante" layoutX="72.0" layoutY="28.0" mnemonicParsing="false" onAction="#volerAlante" text="---&gt;" />
     </children>
 </AnchorPane>
