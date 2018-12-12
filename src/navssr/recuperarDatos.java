@@ -125,7 +125,7 @@ public class recuperarDatos {
             } else if (href.substring(0, 1).equals("/")) {
                 href = webURL + href;
             }
-            System.out.println(href);
+            
             try {
                 // Creando un objeto URL
                 URL url = new URL(href);
