@@ -64,7 +64,7 @@ public class FXMLDocument_MainController implements Initializable {
             // Realizando la petición GET
             try{
             rec.recuperarImagenes();
-            }catch(Exception e){}
+            }catch(Exception e){} 
             /*Document doc = Jsoup.parse(pagina);
             Elements links = doc.select("img");
             for(Element lin : links){
