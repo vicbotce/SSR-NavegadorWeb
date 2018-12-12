@@ -75,29 +75,39 @@ public class recuperarDatos {
         }
 
         for (Element lin : links) {
-            String href = lin.attr("src");
-            if (href.substring(0, 2).equals("//")) {
-                href = "https:" + href;
-            } else if (href.substring(0, 1).equals("/")) {
-                href = webURL + href;
-            }
-            String[] linkDiv = href.split("/");
-            try {
-                URL urlImagen = new URL(href);
-                HttpsURLConnection con = (HttpsURLConnection) urlImagen.openConnection();
-                con.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-                InputStream in = con.getInputStream();
-                Files.copy(in, Paths.get("../DatosPaginas/" + pag[1] + "/imagenes/" + linkDiv[linkDiv.length - 1]));
-            } catch (FileAlreadyExistsException e) {
-            }
             
+            String href = lin.attr("src");
+            
+            try {
+                
+                if (href.substring(0, 2).equals("//")) {
+                    href = "https:" + href;
+                } else if (href.substring(0, 1).equals("/")) {
+                    href = webURL + href;
+                }
+                String[] linkDiv = href.split("/");
+                try {
+                    URL urlImagen = new URL(href);
+                    HttpsURLConnection con = (HttpsURLConnection) urlImagen.openConnection();
+                    con.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                    InputStream in = con.getInputStream();
+                    Files.copy(in, Paths.get("../DatosPaginas/" + pag[1] + "/imagenes/" + linkDiv[linkDiv.length - 1]));
+                } catch (FileAlreadyExistsException e) {
+                }
+
+            } catch (Exception e) {
+                System.out.println("No se ha indicado ubicacion de la imagen");
+            }
+
         }
     }
 
     public void recuperarHTML() {
         FileWriter fichero = null;
         String[] pag = this.webURL.split("\\.");
+        System.out.println(pag[1]);
         try {
+
             fichero = new FileWriter("../DatosPaginas/" + pag[1] + "/index.html");
 
             // Escribimos linea a linea en el fichero
@@ -113,19 +123,20 @@ public class recuperarDatos {
     public void recuperarJavaScript() {
         Document doc = Jsoup.parse(this.webResponse);
         Elements links = doc.select("script");
-  
 
         for (Element lin : links) {
 
             String href = lin.attr("src");
-            if(href == ""){continue;}
-           
+            if (href == "") {
+                continue;
+            }
+
             if (href.substring(0, 2).equals("//")) {
                 href = "https:" + href;
             } else if (href.substring(0, 1).equals("/")) {
                 href = webURL + href;
             }
-            
+
             try {
                 // Creando un objeto URL
                 URL url = new URL(href);
@@ -144,7 +155,7 @@ public class recuperarDatos {
                 }
                 String[] pag = this.webURL.split("\\.");
                 String[] linkDiv = href.split("/");
-                File fichero = new File("../DatosPaginas/" + pag[1] + "/javascript/"+linkDiv[linkDiv.length -1]);
+                File fichero = new File("../DatosPaginas/" + pag[1] + "/javascript/" + linkDiv[linkDiv.length - 1]);
                 fichero.getParentFile().mkdirs();
                 FileWriter write = new FileWriter(fichero);
 
@@ -159,45 +170,49 @@ public class recuperarDatos {
 
         }
     }
-        public void recuperarCSS() throws MalformedURLException, IOException {
-        String href; String comprobar;
+
+    public void recuperarCSS() throws MalformedURLException, IOException {
+        String href;
+        String comprobar;
         Document doc = Jsoup.parse(this.webResponse);
         Elements links = doc.select("link");
         String[] pag = webURL.split("\\.");
-        
+
         try {
-            System.out.println("Holi");
+
             new File("../DatosPaginas/" + pag[1] + "/css").mkdirs();
-            System.out.println("adios");
+
         } catch (Exception e) {
             System.out.println("Falla en la carpeta");
         }
-        
+
         for (Element lin : links) {
             href = lin.attr("href");
             comprobar = lin.attr("rel");
-            if (!comprobar.equals("stylesheet")) { continue; }
-            System.out.println(href);
+            if (!comprobar.equals("stylesheet")) {
+                continue;
+            }
+
             if (href.substring(0, 2).equals("//")) {
                 href = "https:" + href;
             } else if (href.substring(0, 1).equals("/")) {
                 href = webURL + href;
             }
             String[] linkDiv = href.split("/");
-            try{
-                
+            try {
+
                 URL urlCSS = new URL(href);
                 HttpsURLConnection con = (HttpsURLConnection) urlCSS.openConnection();
                 con.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
                 InputStream in = con.getInputStream();
-                Files.copy(in, Paths.get("../DatosPaginas/" + pag[1] + "/css/"+ linkDiv[linkDiv.length - 1]));
-                
+                Files.copy(in, Paths.get("../DatosPaginas/" + pag[1] + "/css/" + linkDiv[linkDiv.length - 1]));
+
             } catch (MalformedURLException e) {
                 e.toString();
             } catch (IOException e) {
                 e.toString();
             }
-            
+
         }
 
     }
