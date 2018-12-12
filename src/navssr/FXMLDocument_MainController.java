@@ -54,48 +54,27 @@ public class FXMLDocument_MainController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         String pagina = "";
         String paginaURLString = paginaURL.getText();
-        String userAgent="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
    
-        label.setText("Hello World!");
         URL url;
-        try {
+        
             final WebEngine webEngine = panelWEB.getEngine();
-            //webEngine.load("http://www.pccomponentes.es");
-            // Creando un objeto URL
+            
             String link = "https://" + paginaURLString;
-            url = new URL(link);
+            webEngine.load(link);
 
             // Realizando la petición GET
-            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("user-agent", userAgent);
-            // Leyendo el resultado
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
- 
-            String linea;
-            while ((linea = in.readLine()) != null) {
-                pagina += linea;
-            }
             
-            Document doc = Jsoup.parse(pagina);
+            
+            /*Document doc = Jsoup.parse(pagina);
             Elements links = doc.select("img");
             for(Element lin : links){
-                String href = lin.attr("src");
+                String href = lin.attr("src");*/
                 
-                System.out.println(href);
+                //System.out.println(href);
                 //webEngine.setUserStyleSheetLocation(getClass().getResource(href).toString());
-            }
-            paginaAnterior = paginaActual;
-            paginaActual = pagina;
-            webEngine.loadContent(pagina);
-   
+           
             
             
-            
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
  
     
     }
