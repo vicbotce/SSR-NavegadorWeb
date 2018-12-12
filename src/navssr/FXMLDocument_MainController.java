@@ -27,7 +27,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 /**
  *
  * @author sirkora
@@ -61,17 +60,19 @@ public class FXMLDocument_MainController implements Initializable {
             
             String link = "https://" + paginaURLString;
             webEngine.load(link);
-
+            recuperarDatos rec = new recuperarDatos(link);
             // Realizando la petición GET
-            
-            
+            try{
+            rec.recuperarImagenes();
+            }catch(Exception e){}
             /*Document doc = Jsoup.parse(pagina);
             Elements links = doc.select("img");
             for(Element lin : links){
                 String href = lin.attr("src");*/
                 
                 //System.out.println(href);
-                //webEngine.setUserStyleSheetLocation(getClass().getResource(href).toString());
+  
+       
            
             
             
