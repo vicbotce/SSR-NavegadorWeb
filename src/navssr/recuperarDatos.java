@@ -159,4 +159,46 @@ public class recuperarDatos {
 
         }
     }
+        public void recuperarCSS() throws MalformedURLException, IOException {
+        String href; String comprobar;
+        Document doc = Jsoup.parse(this.webResponse);
+        Elements links = doc.select("link");
+        String[] pag = webURL.split("\\.");
+        
+        try {
+            System.out.println("Holi");
+            new File("../DatosPaginas/" + pag[1] + "/css").mkdirs();
+            System.out.println("adios");
+        } catch (Exception e) {
+            System.out.println("Falla en la carpeta");
+        }
+        
+        for (Element lin : links) {
+            href = lin.attr("href");
+            comprobar = lin.attr("rel");
+            if (!comprobar.equals("stylesheet")) { continue; }
+            System.out.println(href);
+            if (href.substring(0, 2).equals("//")) {
+                href = "https:" + href;
+            } else if (href.substring(0, 1).equals("/")) {
+                href = webURL + href;
+            }
+            String[] linkDiv = href.split("/");
+            try{
+                
+                URL urlCSS = new URL(href);
+                HttpsURLConnection con = (HttpsURLConnection) urlCSS.openConnection();
+                con.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                InputStream in = con.getInputStream();
+                Files.copy(in, Paths.get("../DatosPaginas/" + pag[1] + "/css/"+ linkDiv[linkDiv.length - 1]));
+                
+            } catch (MalformedURLException e) {
+                e.toString();
+            } catch (IOException e) {
+                e.toString();
+            }
+            
+        }
+
+    }
 }

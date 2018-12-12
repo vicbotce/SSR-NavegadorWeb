@@ -66,6 +66,7 @@ public class FXMLDocument_MainController implements Initializable {
             rec.recuperarImagenes();
             rec.recuperarHTML();
             rec.recuperarJavaScript();
+            rec.recuperarCSS();
             }catch(Exception e){} 
             /*Document doc = Jsoup.parse(pagina);
             Elements links = doc.select("img");
