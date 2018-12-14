@@ -28,7 +28,7 @@ import org.jsoup.select.Elements;
  *
  * @author victorbotti
  */
-public class recuperarDatos {
+public class recuperarDatos extends Thread{
 
     private String webResponse;
     private String webURL;
@@ -38,6 +38,14 @@ public class recuperarDatos {
         this.webURL = webURL;
     }
 
+    public void run(){
+        try{
+            recuperarImagenes();
+            recuperarHTML();
+            recuperarJavaScript();
+            recuperarCSS();
+        }catch(Exception e){}
+    }
     private String recuperarPagina(String link) {
         URL url;
         String pagina = "";

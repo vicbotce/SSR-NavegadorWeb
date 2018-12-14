@@ -5,9 +5,7 @@
  */
 package navssr;
 
-
-
-
+import com.jfoenix.controls.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,15 +37,11 @@ public class FXMLDocument_MainController implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private Button button;
+    private JFXButton button;
     @FXML
     private WebView panelWEB;
     @FXML
-    private TextField paginaURL;
-    @FXML
-    private Button botonAtras;
-    @FXML
-    private Button botonAlante;
+    private JFXTextField paginaURL;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -55,50 +49,41 @@ public class FXMLDocument_MainController implements Initializable {
         String paginaURLString = paginaURL.getText();
    
         URL url;
-        
             final WebEngine webEngine = panelWEB.getEngine();
             
+            
             String link = "https://" + paginaURLString;
-            webEngine.load(link);
-            recuperarDatos rec = new recuperarDatos(link);
-            // Realizando la petición GET
             try{
-            rec.recuperarImagenes();
-            rec.recuperarHTML();
-            rec.recuperarJavaScript();
-            rec.recuperarCSS();
-            }catch(Exception e){System.out.println(e);} 
+                recuperarDatos rec = new recuperarDatos(link);
+            // Realizando la petición GET
+                rec.start();
+                webEngine.load(link);
+                
+            }catch(Exception e){}}
+            
+            
             /*Document doc = Jsoup.parse(pagina);
             Elements links = doc.select("img");
             for(Element lin : links){
                 String href = lin.attr("src");*/
                 
                 //System.out.println(href);
-  
-       
-           
-            
-            
- 
-    
-    }
-    
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
 
-    @FXML
     private void volverAtras(ActionEvent event) {
         paginaSiguiente = paginaActual;
         paginaActual = paginaAnterior;
         
     }
 
-    @FXML
     private void volerAlante(ActionEvent event) {
         paginaActual = paginaSiguiente;
         paginaSiguiente = "";
-    }
+  
     
+    }
 }
