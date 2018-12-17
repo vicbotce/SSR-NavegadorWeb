@@ -6,6 +6,7 @@
 package navssr;
 
 import com.jfoenix.controls.*;
+import java.awt.event.WindowAdapter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -72,7 +73,9 @@ public class FXMLDocument_MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+       
+    }   
+    
 
     //NO SE USA, NO LO BORRAMOS POR SI HAY ALGUNA DEPENDENCIA EXTRAÑA
     private void volverAtras(ActionEvent event) {

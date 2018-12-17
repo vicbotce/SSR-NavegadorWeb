@@ -11,6 +11,7 @@ import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +34,12 @@ public class NavSSR extends Application {
         stage.setScene(scene);
         stage.show();
     }
+    
+    @Override
+    public void stop() {
+        File f = new File("../DatosPaginas");
+        deleteDirectory(f);
+    }
 
     /**
      * @param args the command line arguments
@@ -40,6 +47,29 @@ public class NavSSR extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    void deleteDirectory(File fileDel) {
+            if(fileDel.isDirectory()){            
+            
+            if(fileDel.list().length == 0)
+                fileDel.delete();
+            else{
+                
+               for (String temp : fileDel.list()) {
+                   File fileDelete = new File(fileDel, temp);
+                   //recursive delete
+                   deleteDirectory(fileDelete);
+               }
+               //check the directory again, if empty then delete it
+               if(fileDel.list().length==0)
+                   fileDel.delete();               
+            }
+        }else{            
+            //if file, then delete it
+            fileDel.delete();            
+        }
+    
+}
     
   
 }
