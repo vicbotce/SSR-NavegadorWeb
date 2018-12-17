@@ -1,0 +1,1 @@
+function ajaxLoadingParam(n,a){return $.extend(a,{beforeSend:function(){var a=$("#ajax-loadin-container").html();n.hide().append(a).fadeIn(600)},complete:function(){n.children("#ajax-loading").remove()}})}

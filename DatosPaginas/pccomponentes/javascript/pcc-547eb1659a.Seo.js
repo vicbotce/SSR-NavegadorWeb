@@ -1,0 +1,1 @@
+function Seo(){return{actualDate:function(a){window.actualDate=a},topDataLayer:function(){window.dataLayer=window.dataLayer||[],dataLayer.push({grupo_categoria:void 0,grupo_super_padre:void 0,grupo_marca:void 0,_tipopagina:"home",num_articulos:void 0,user:PccUserId.get()})}}}var PCC=PCC||{};PCC.Seo=Seo;

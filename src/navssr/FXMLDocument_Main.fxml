@@ -12,7 +12,7 @@
     <children>
       <HBox alignment="CENTER" prefHeight="68.0" prefWidth="1356.0">
          <children>
-            <JFXTextField fx:id="paginaURL" prefHeight="27.0" prefWidth="561.0">
+            <JFXTextField fx:id="paginaURL" prefHeight="27.0" prefWidth="561.0" onAction="#onEnter">
                <padding>
                   <Insets right="20.0" />
                </padding>
@@ -24,3 +24,5 @@
       <WebView id="panelWEB" fx:id="panelWEB" layoutX="6.0" layoutY="69.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1500.0" />
     </children>
 </AnchorPane>
+
+

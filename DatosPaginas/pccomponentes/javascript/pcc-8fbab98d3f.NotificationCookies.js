@@ -1,0 +1,1 @@
+$(window).on("load",function(){var o=$(".notificacion-cookies");1!=$.cookie("acept_cookie")&&(o.show(),$(".accept-cookie").click(function(){$.cookie("acept_cookie",1,{expires:100}),o.hide("slow"),o.remove()})),1==$.cookie("acept_cookie")&&o.remove(),1==$.cookie("magicacceded")&&(generateNotification("magic",""),$.cookie("magicacceded",0,{expires:100}))});

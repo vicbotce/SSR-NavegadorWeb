@@ -74,16 +74,23 @@ public class FXMLDocument_MainController implements Initializable {
         // TODO
     }    
 
+    //NO SE USA, NO LO BORRAMOS POR SI HAY ALGUNA DEPENDENCIA EXTRAÑA
     private void volverAtras(ActionEvent event) {
         paginaSiguiente = paginaActual;
         paginaActual = paginaAnterior;
         
     }
-
+    
+    //NO SE USA, NO LO BORRAMOS POR SI HAY ALGUNA DEPENDENCIA EXTRAÑA
     private void volerAlante(ActionEvent event) {
         paginaActual = paginaSiguiente;
         paginaSiguiente = "";
   
     
+    }
+
+    @FXML
+    private void onEnter(ActionEvent event) {
+        handleButtonAction(event);
     }
 }
